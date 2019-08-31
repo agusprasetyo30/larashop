@@ -13,15 +13,15 @@ class PenyesuaianTableUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string("username")->after("email")->unique();
-            $table->string("roles")->after("password");
-            $table->text("address")->after("roles");
-            $table->string("phone")->after("address");
-            $table->string("avatar")->after("phone");
-            $table->enum("status", ["ACTIVE", "INACTIVE"])->after("avatar");
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->string("username")->after("email")->unique();
+        //     $table->string("roles")->after("password");
+        //     $table->text("address")->after("roles");
+        //     $table->string("phone")->after("address");
+        //     $table->string("avatar")->after("phone");
+        //     $table->enum("status", ["ACTIVE", "INACTIVE"])->after("avatar");
 
-        });
+        // });
     }
 
     /**
@@ -31,13 +31,13 @@ class PenyesuaianTableUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn("username");
-            $table->dropColumn("roles");
-            $table->dropColumn("address");
-            $table->dropColumn("phone");
-            $table->dropColumn("avatar");
-            $table->dropColumn("status");
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropColumn("username");
+        //     $table->dropColumn("roles");
+        //     $table->dropColumn("address");
+        //     $table->dropColumn("phone");
+        //     $table->dropColumn("avatar");
+        //     $table->dropColumn("status");
+        // });
     }
 }

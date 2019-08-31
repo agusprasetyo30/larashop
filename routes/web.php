@@ -26,3 +26,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 
+// Delete
+Route::get('categories/trash', 'CategoryController@trash')
+->name('categories.trash');
+
+// Restore
+Route::get('users/{id}/restore', 'CategoryController@restore')
+->name('categories.restore');
+
+// Delete Permanent
+Route::delete('users/{id}/delete-permanent', 'CategoryController@deletePermanent')
+->name('categories.delete-permanent');
+
+Route::resource('categories', 'CategoryController');
+
+

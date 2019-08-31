@@ -16,14 +16,27 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $users = User::paginate(5);
 
         // Mengambil data pada input text, jika tidak ada maka bernilai null
         $filterKeyword = $request->get('keyword');
+        $status = $request->get('status');
+
 
         if ($filterKeyword)
         {
-            $users = User::where("email", "LIKE", "%$filterKeyword%")->paginate(10);
+            if ($status)
+            {
+                $users = User::where("email", "LIKE", "%$filterKeyword%")
+                ->where("status", $status)
+                ->paginate(5);
+            } else {
+                $users = User::where("email", "LIKE", "%$filterKeyword%")
+                ->paginate(5);
+            }
+        } else if ($status) {
+            $users = User::where("status", "=" , $status)
+            ->paginate(5);
         }
 
         return view('users.index', compact('users'));
@@ -63,7 +76,7 @@ class UserController extends Controller
             $file = savePhoto($request->get('name'), $request->file('avatar'), 'avatars');
             $new_user->avatar = $file;
         } else {
-            $new_user->avarar = "";
+            $new_user->avatar = "";
         }
 
         $new_user->save();
