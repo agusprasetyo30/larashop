@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
 use Illuminate\Support\Facades\Storage;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -138,7 +138,8 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if ($category->categories) {
+        if ($category->categories)
+        {
             Storage::delete('public/' . $category->image);
         }
 
@@ -166,7 +167,9 @@ class CategoryController extends Controller
         if ($category->trashed())
         {
             $category->restore();
+
         } else {
+
             return redirect()
             ->route('categories.index')
             ->with('status', 'Category is not in trash');
@@ -196,5 +199,15 @@ class CategoryController extends Controller
             ->route('categories.index')
             ->with('status', 'Category is not in trash');
         }
+    }
+
+    // Pencarian data dengan ajax
+    public function ajaxSearch(Request $request)
+    {
+        $keyword = $request->get('q');
+
+        $categories = Category::where("name", "LIKE", "%$keyword%")->get();
+
+        return $categories;
     }
 }

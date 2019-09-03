@@ -38,6 +38,15 @@ Route::get('users/{id}/restore', 'CategoryController@restore')
 Route::delete('users/{id}/delete-permanent', 'CategoryController@deletePermanent')
 ->name('categories.delete-permanent');
 
+Route::get('ajax/categories/search', 'CategoryController@ajaxSearch');
+
 Route::resource('categories', 'CategoryController');
+
+// Menghapus & Restore buku
+Route::get('books/trash', 'BookController@trash')->name('books.trash');
+Route::post('books/{id}/restore', 'BookController@restore')->name('books.restore');
+Route::delete('books/{id}/delete-permanent', 'BookController@deletePermanent')->name('books.delete-permanent');
+
+Route::resource('books', 'BookController');
 
 
