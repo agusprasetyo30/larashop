@@ -24,24 +24,24 @@
         </div>
         <div class="col-md-6">
             <input {{ Request::get('status') == 'ACTIVE' ? 'checked' : '' }}
-            type="radio"
-            name="status"
-            id="active"
-            value="ACTIVE"
-            class="form-control">
+                type="radio"
+                name="status"
+                id="active"
+                value="ACTIVE"
+                class="form-control">
             <label for="active">Active</label>
 
             <input {{ Request::get('status') == 'INACTIVE' ? 'checked' : '' }}
-            type="radio"
-            name="status"
-            id="inactive"
-            value="INACTIVE"
-            class="form-control">
+                type="radio"
+                name="status"
+                id="inactive"
+                value="INACTIVE"
+                class="form-control">
             <label for="inactive">Inactive</label>
 
             <input type="submit"
-            value="Filter"
-            class="btn btn-primary">
+                value="Filter"
+                class="btn btn-primary">
         </form>
             {{-- <div class="input-group-append"> --}}
         </div>
