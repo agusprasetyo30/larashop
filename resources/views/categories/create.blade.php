@@ -22,16 +22,25 @@
 
         <label for="name">Category Name</label><br>
         <input type="text"
-            class="form-control"
-            name="name"
-            id="name">
+            class="form-control {{ $errors->first('name') ? 'is-invalid' : '' }}"
+            name="name" id="name"
+            value="{{ old('name') }}">
+
+            <div class="invalid-feedback">
+            {{$errors->first('name')}}
+        </div>
+
         <br>
 
         <label for="image">Category Image</label><br>
         <input type="file"
-            class="form-control"
-            name="image"
-            id="image">
+            class="form-control {{ $errors->first('name') ? 'is-invalid' : '' }}"
+            name="image" id="image">
+
+        <div class="invalid-feedback">
+            {{$errors->first('image')}}
+        </div>
+
         <br>
 
         <input type="submit"

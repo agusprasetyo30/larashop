@@ -23,17 +23,23 @@
             <label>Category name</label> <br>
             <input
                 type="text"
-                class="form-control"
-                value="{{ $category->name }}"
+                class="form-control {{ $errors->first('name') ? 'is-invalid' : '' }}"
+                value="{{ old('name') ? old('name') : $category->name }}"
                 name="name">
+            <div class="invalid-feedback">
+                {{$errors->first('name')}}
+            </div>
             <br>
 
             <label>Category slug</label>
             <input
                 type="text"
-                class="form-control"
-                value="{{$category->slug}}"
+                class="form-control {{ $errors->first('slug') ? 'is-invalid' : '' }}"
+                value="{{ old('slug') ? old('slug') : $category->slug }}"
                 name="slug">
+            <div class="invalid-feedback">
+                {{$errors->first('sluh')}}
+            </div>
             <br>
 
             <span>Current image</span><br>
