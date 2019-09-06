@@ -66,7 +66,7 @@ class UserController extends Controller
             "name"     => "required|min:5|max:100",
             "username" => "required|min:5|max:20",
             "roles"    => "required",
-            "phone"    => "required|digit_between:10, 12",
+            "phone"    => "required|digits_between:10, 12",
             "address"  => "required|min:20|max:200",
             "avatar"   => "required",
             "email"    => "required|email",
@@ -74,10 +74,11 @@ class UserController extends Controller
             "password_confirmation" => "required|same:password"
         ])->validate();
 
+        $dataRoles = $request->get('roles');
+
         $new_user = new User;
         $new_user->name = $request->get('name');
         $new_user->username = $request->get('username');
-        $new_user->roles = json_encode($request->get('roles'));
         $new_user->phone = $request->get('phone');
         $new_user->address = $request->get('address');
         $new_user->email = $request->get('email');
@@ -93,6 +94,8 @@ class UserController extends Controller
         }
 
         $new_user->save();
+
+        $new_user->assignRole($dataRoles);
 
         return redirect()
         ->route('users.create')
@@ -144,13 +147,16 @@ class UserController extends Controller
             "address" => "required|min:20|max:200",
         ])->validate();
 
+        $dataRoles = $request->get('roles');
+
         $user = User::findOrFail($id);
 
         $user->name = $request->get('name');
-        $user->roles = json_encode($request->get('roles'));
         $user->address = $request->get('address');
         $user->phone = $request->get('phone');
         $user->status = $request->get('status');
+
+        // dd($request->get('roles'), json_encode($request->get('roles')));
 
         if ($request->file('avatar'))
         {
@@ -165,6 +171,8 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        $user->syncRoles($dataRoles);
 
         return redirect()
         ->route('users.edit', ['id' => $id])

@@ -34,7 +34,8 @@
         <input type="text"
             class="form-control {{ $errors->first('username') ? 'is-invalid' : '' }}"
             name="username" id="username"
-            placeholder="Username">
+            placeholder="Username"
+            value="{{ old('username') }}">
 
         <div class="invalid-feedback">
             {{ $errors->first('username') }}
@@ -48,7 +49,7 @@
             class="form-control {{ $errors->first('roles') ? 'is-invalid' : '' }}"
             name="roles[]"
             id="ADMIN"
-            value="ADMIN">
+            value="ADMINISTRATOR">
 
         <label for="ADMIN">
             Administrator
@@ -132,7 +133,7 @@
             value="{{ old('email') }}">
 
         <div class="invalid-feedback">
-            {{ $errors->first('avatar') }}
+            {{ $errors->first('email') }}
         </div>
         <br>
 

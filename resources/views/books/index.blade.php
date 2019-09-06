@@ -28,7 +28,7 @@
                         <a href="{{ route('books.index') }}"
                             class="nav-link
                                 {{ Request::path() == 'books'
-                                && Request::get('status') == null ? 'active' : '' }}">All</a>
+                                    && Request::get('status') == null ? 'active' : '' }}">All</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('books.index', ['status' => 'publish']) }}"
@@ -51,7 +51,10 @@
             <div class="col-md-12 text-right">
                 <a
                     href="{{ route('books.create') }}"
-                    class="btn btn-primary">Create Book</a>
+                    class="btn btn-primary {{ Auth::user()->hasrole('ADMINISTRATOR') ? 'visible' : 'invisible' }}">
+
+                    Create Book
+                </a>
             </div>
         </div>
 
@@ -106,22 +109,26 @@
                     <td>{{$book->stock}}</td>
                     <td>{{$book->price}}</td>
                     <td>
-                        <a
-                            href="{{ route('books.edit', $book->id) }}"
-                            class="btn btn-info btn-sm">Edit</a>
+                        @if ( Auth::user()->hasrole('ADMINISTRATOR') )
+                            <a
+                                href="{{ route('books.edit', $book->id) }}"
+                                class="btn btn-info btn-sm">Edit</a>
 
-                        <form action="{{ route('books.destroy', $book->id) }}"
-                            class="d-inline"
-                            onsubmit="return confirm('Move book to trash?')"
-                            method="post">
+                            <form action="{{ route('books.destroy', $book->id) }}"
+                                class="d-inline"
+                                onsubmit="return confirm('Move book to trash?')"
+                                method="post">
 
-                            @csrf
-                            @method('delete')
+                                @csrf
+                                @method('delete')
 
-                            <input type="submit"
-                                value="Trash"
-                                class="btn btn-danger btn-sm">
-                        </form>
+                                <input type="submit"
+                                    value="Trash"
+                                    class="btn btn-danger btn-sm">
+                            </form>
+                        @else
+                            [ No action here ]
+                        @endif
                     </td>
                 </tr>
             @endforeach

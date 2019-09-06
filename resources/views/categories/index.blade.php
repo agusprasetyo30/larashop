@@ -40,7 +40,10 @@
 <div class="row">
     <div class="col-md-12 text-right">
         <a href="{{route('categories.create')}}"
-            class="btn btn-primary">Create category</a>
+            class="btn btn-primary {{ Auth::user()->hasrole('ADMINISTRATOR') ? 'visible' : 'invisible' }}">
+
+            Create category
+        </a>
     </div>
 </div>
 <br>
@@ -79,6 +82,8 @@
                             @endif
                         </td>
                         <td>
+                        @if ( Auth::user()->hasrole('ADMINISTRATOR') )
+
                             <a href="{{ route('categories.show', $category->id) }}"
                                 class="btn btn-primary btn-sm">Show</a>
 
@@ -97,6 +102,9 @@
                                     value="Trash"
                                     class="btn btn-danger btn-sm">
                             </form>
+                        @else
+                            [ No action here ]
+                        @endif
                         </td>
                     </tr>
                 @endforeach

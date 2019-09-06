@@ -61,9 +61,9 @@
         </label><br>
 
         <input type="checkbox"
-            {{ in_array("ADMIN", json_decode($user->roles)) ? "checked" : "" }}
+            {{ $user->hasRole('ADMINISTRATOR') ? "checked" : "" }}
             name="roles[]" id="ADMIN"
-            value="ADMIN"
+            value="ADMINISTRATOR"
             class="form-control {{$errors->first('roles') ? 'is-invalid' : '' }}"/>
 
         <label for="ADMIN">
@@ -71,7 +71,7 @@
         </label>
 
         <input type="checkbox"
-            {{ in_array("STAFF", json_decode($user->roles)) ? "checked" : "" }}
+            {{ $user->hasRole('STAFF') ? "checked" : "" }}
             name="roles[]"
             value="STAFF" id="STAFF"
             class="form-control {{$errors->first('roles') ? 'is-invalid' : '' }}"/>
@@ -81,7 +81,7 @@
         </label>
 
         <input type="checkbox"
-            {{ in_array("CUSTOMER", json_decode($user->roles)) ? "checked" : "" }}
+            {{ $user->hasRole('CUSTOMER') ? "checked" : "" }}
             name="roles[]" id="CUSTOMER"
             value="CUSTOMER"
             class="form-control {{$errors->first('roles') ? 'is-invalid' : '' }}"/>

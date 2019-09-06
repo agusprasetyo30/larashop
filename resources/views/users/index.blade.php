@@ -50,8 +50,10 @@
     <div class="row mb-3">
         <div class="col-md 12 text-right">
             <a
-            href="{{ route('users.create') }}"
-            class="btn btn-primary">Create User</a>
+                href="{{ route('users.create') }}"
+                class="btn btn-primary {{ Auth::user()->hasrole('ADMINISTRATOR') ? 'visible' : 'invisible' }}">
+                Create User
+            </a>
         </div>
     </div>
 
@@ -97,21 +99,26 @@
                         @endif
                     </td>
                     <td class="align-middle">
-                        <a class="btn btn-info text-white btn-sm" href="{{ route('users.edit', $user->id) }}">Edit</a>
+                        @if ( Auth::user()->hasrole('ADMINISTRATOR') )
+                            <a class="btn btn-info text-white btn-sm" href="{{ route('users.edit', $user->id) }}">Edit</a>
 
-                        <form
-                        onsubmit="return confirm('Delete this user permanenly ?')"
-                        class="d-inline"
-                        action="{{ route('users.destroy', $user->id) }}"
-                        method="post">
-                            @csrf
-                            @method('delete')
+                            <form
+                            onsubmit="return confirm('Delete this user permanenly ?')"
+                            class="d-inline"
+                            action="{{ route('users.destroy', $user->id) }}"
+                            method="post">
+                                @csrf
+                                @method('delete')
 
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                        </form>
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                            </form>
 
-                        <a href="{{ route('users.show', $user->id) }}"
-                            class="btn btn-primary btn-sm">Detail</a>
+                            <a href="{{ route('users.show', $user->id) }}"
+                                class="btn btn-primary btn-sm">Detail</a>
+                        @else
+                            [ No Action Here ]
+                        @endif
+
                     </td>
                 </tr>
             @endforeach

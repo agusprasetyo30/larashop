@@ -16,39 +16,48 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
-
 Route::match(['get', 'post'], '/register', function () {
     return redirect("/login");
 })->name("register");
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
 
-Route::resource('users', 'UserController');
+Route::group(['middleware' => 'auth'], function () {
 
-// Delete
-Route::get('categories/trash', 'CategoryController@trash')
-->name('categories.trash');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-// Restore
-Route::get('users/{id}/restore', 'CategoryController@restore')
-->name('categories.restore');
+    Route::group(['middleware' => ['role:ADMINISTRATOR|STAFF']], function () {
 
-// Delete Permanent
-Route::delete('users/{id}/delete-permanent', 'CategoryController@deletePermanent')
-->name('categories.delete-permanent');
+        Route::resource('users', 'UserController');
 
-Route::get('ajax/categories/search', 'CategoryController@ajaxSearch');
+        // Delete
+        Route::get('categories/trash', 'CategoryController@trash')
+            ->name('categories.trash');
 
-Route::resource('categories', 'CategoryController');
+        // Restore
+        Route::get('users/{id}/restore', 'CategoryController@restore')
+            ->name('categories.restore');
 
-// Menghapus & Restore buku
-Route::get('books/trash', 'BookController@trash')->name('books.trash');
-Route::post('books/{id}/restore', 'BookController@restore')->name('books.restore');
-Route::delete('books/{id}/delete-permanent', 'BookController@deletePermanent')->name('books.delete-permanent');
+        // Delete Permanent
+        Route::delete('users/{id}/delete-permanent', 'CategoryController@deletePermanent')
+            ->name('categories.delete-permanent');
 
-Route::resource('books', 'BookController');
+        // Untuk menampilkan kategori ketika menggunakna select2
+        Route::get('ajax/categories/search', 'CategoryController@ajaxSearch');
 
-Route::resource('orders', 'OrderController');
+        Route::resource('categories', 'CategoryController');
+
+        // Menghapus & Restore buku
+        Route::get('books/trash', 'BookController@trash')->name('books.trash');
+        Route::post('books/{id}/restore', 'BookController@restore')->name('books.restore');
+        Route::delete('books/{id}/delete-permanent', 'BookController@deletePermanent')->name('books.delete-permanent');
+
+        // CRUD Buku
+        Route::resource('books', 'BookController');
+
+        // Untuk orders
+        Route::resource('orders', 'OrderController');
 
 
+    });
+});
